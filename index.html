@@ -131,6 +131,97 @@
         });
     });
 </script>
+    
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const links = document.querySelectorAll("#days-container a");
+
+        links.forEach(link => {
+            link.addEventListener("click", function (event) {
+                event.preventDefault(); // Prevent immediate navigation
+
+                let countdown = 5; // Set timer in seconds
+                
+                // Create heart-shaped timer div
+                const timerDiv = document.createElement("div");
+                timerDiv.id = "timer-heart";
+                timerDiv.innerHTML = `<span id="timer-text">${countdown}</span>`;
+                document.body.appendChild(timerDiv);
+
+                // Countdown logic
+                const interval = setInterval(() => {
+                    countdown--;
+                    document.getElementById("timer-text").innerText = countdown;
+
+                    if (countdown <= 0) {
+                        clearInterval(interval);
+                        window.location.href = link.href; // Navigate to the page
+                    }
+                }, 1000);
+            });
+        });
+    });
+</script>
+
+<style>
+    /* Heart Shape */
+    #timer-heart {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100px;
+        height: 100px;
+        background-color: #ff4d6d;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+        font-weight: bold;
+        color: white;
+        text-align: center;
+        border-radius: 50%;
+        box-shadow: 0 0 20px rgba(255, 77, 109, 0.8);
+        animation: heartbeat 1s infinite alternate;
+    }
+
+    /* Heartbeat Animation */
+    @keyframes heartbeat {
+        0% {
+            transform: translate(-50%, -50%) scale(1);
+        }
+        100% {
+            transform: translate(-50%, -50%) scale(1.2);
+        }
+    }
+
+    /* Heart Shape Effect */
+    #timer-heart::before,
+    #timer-heart::after {
+        content: "";
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        background-color: #ff4d6d;
+        border-radius: 50%;
+    }
+
+    #timer-heart::before {
+        top: -50px;
+        left: 0;
+    }
+
+    #timer-heart::after {
+        left: 50px;
+        top: 0;
+    }
+
+    /* Timer Text */
+    #timer-text {
+        position: relative;
+        z-index: 2;
+    }
+</style>
 
 </body>
 </html>
