@@ -3,26 +3,107 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Valentine's Week Special</title>
+    <title>Valentine Wish for Her</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            background-color: #ffccdc;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+        }
+        .container {
+            margin-top: 50px;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+        }
+        h1 {
+            color: #ff3366;
+            font-size: 2.5em;
+        }
+        p {
+            font-size: 1.2em;
+            color: #444;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            margin: 10px 0;
+        }
+        a {
+            text-decoration: none;
+            font-size: 1.5em;
+            background: #ff6699;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            display: inline-block;
+            transition: transform 0.3s;
+        }
+        a.locked {
+            background: gray;
+            pointer-events: none;
+        }
+        a:hover {
+            transform: scale(1.1);
+        }
+        .hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: red;
+            clip-path: polygon(50% 0%, 100% 35%, 75% 100%, 50% 80%, 25% 100%, 0% 35%);
+            opacity: 0.7;
+            animation: float 5s infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(100vh); opacity: 1; }
+            100% { transform: translateY(-10vh); opacity: 0; }
+        }
+    </style>
 </head>
 <body>
+    <div class="hearts"></div>
     <div class="container">
-        <h1>Valentine's Week Celebration ❤️</h1>
-        <p>Unlock a special message for each day of love!</p>
+        <h1>Happy Valentine's Week, My Love! 💖</h1>
+        <p>Each day brings a new surprise and message just for you. Unlock them as the days arrive.</p>
         <div id="days-container">
             <ul>
-                <li><a href="rose.html" id="rose">🌹 Rose Day - Feb 7</a></li>
-                <li><a href="propose.html" id="propose">💍 Propose Day - Feb 8</a></li>
-                <li><a href="chocolate.html" id="chocolate">🍫 Chocolate Day - Feb 9</a></li>
-                <li><a href="teddy-day.html" id="teddy">🧸 Teddy Day - Feb 10</a></li>
-                <li><a href="promise-day.html" id="promise">🤞 Promise Day - Feb 11</a></li>
-                <li><a href="hug-day.html" id="hug">🤗 Hug Day - Feb 12</a></li>
-                <li><a href="kiss-day.html" id="kiss">💋 Kiss Day - Feb 13</a></li>
-                <li><a href="valentine-day.html" id="valentine">❤️ Valentine's Day - Feb 14</a></li>
+                <li><a href="rose-day.html" class="locked" id="day1">🌹 Rose Day - Feb 7</a></li>
+                <li><a href="propose-day.html" class="locked" id="day2">💍 Propose Day - Feb 8</a></li>
+                <li><a href="chocolate-day.html" class="locked" id="day3">🍫 Chocolate Day - Feb 9</a></li>
+                <li><a href="teddy-day.html" class="locked" id="day4">🧸 Teddy Day - Feb 10</a></li>
+                <li><a href="promise-day.html" class="locked" id="day5">🤞 Promise Day - Feb 11</a></li>
+                <li><a href="hug-day.html" class="locked" id="day6">🤗 Hug Day - Feb 12</a></li>
+                <li><a href="kiss-day.html" class="locked" id="day7">💋 Kiss Day - Feb 13</a></li>
+                <li><a href="valentine-day.html" class="locked" id="day8">❤️ Valentine's Day - Feb 14</a></li>
             </ul>
         </div>
     </div>
-    <script src="script.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const heartsContainer = document.querySelector(".hearts");
+            for (let i = 0; i < 30; i++) {
+                let heart = document.createElement("div");
+                heart.classList.add("heart");
+                heart.style.left = Math.random() * 100 + "vw";
+                heart.style.animationDuration = Math.random() * 2 + 3 + "s";
+                heartsContainer.appendChild(heart);
+            }
+        });
+    </script>
 </body>
 </html>
