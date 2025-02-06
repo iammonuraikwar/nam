@@ -1,0 +1,73 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(45deg, #ff758c, #ff7eb3);
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+.container {
+    max-width: 600px;
+    margin: auto;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+h1 {
+    font-size: 2em;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+}
+
+p {
+    font-size: 1.2em;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+ul li {
+    margin: 15px 0;
+}
+
+ul li a {
+    display: inline-block;
+    width: 80%;
+    padding: 10px;
+    text-decoration: none;
+    color: white;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    font-size: 1.2em;
+    transition: 0.3s;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+ul li a:hover {
+    background: rgba(255, 255, 255, 0.5);
+    transform: scale(1.05);
+}
+
+ul li a.locked {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+@keyframes hearts {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+}
+
+.heart {
+    position: absolute;
+    bottom: 0;
+    width: 20px;
+    height: 20px;
+    background: red;
+    clip-path: polygon(50% 0%, 100% 35%, 75% 100%, 50% 75%, 25% 100%, 0% 35%);
+    animation: hearts 5s linear infinite;
+}
