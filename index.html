@@ -93,17 +93,44 @@
             </ul>
         </div>
     </div>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const heartsContainer = document.querySelector(".hearts");
-            for (let i = 0; i < 30; i++) {
-                let heart = document.createElement("div");
-                heart.classList.add("heart");
-                heart.style.left = Math.random() * 100 + "vw";
-                heart.style.animationDuration = Math.random() * 2 + 3 + "s";
-                heartsContainer.appendChild(heart);
+   <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const heartsContainer = document.querySelector(".hearts");
+        
+        // Generate floating hearts
+        for (let i = 0; i < 30; i++) {
+            let heart = document.createElement("div");
+            heart.classList.add("heart");
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.animationDuration = Math.random() * 2 + 3 + "s";
+            heartsContainer.appendChild(heart);
+        }
+
+        // Unlock links based on the date
+        const today = new Date();
+        const valentineDays = [
+            { id: "day1", date: "2025-02-06" },
+            { id: "day2", date: "2025-02-08" },
+            { id: "day3", date: "2025-02-09" },
+            { id: "day4", date: "2025-02-10" },
+            { id: "day5", date: "2025-02-11" },
+            { id: "day6", date: "2025-02-12" },
+            { id: "day7", date: "2025-02-13" },
+            { id: "day8", date: "2025-02-14" }
+        ];
+
+        valentineDays.forEach(day => {
+            const link = document.getElementById(day.id);
+            const unlockDate = new Date(day.date);
+
+            if (today >= unlockDate) {
+                link.classList.remove("locked"); // Unlock link
+                link.style.background = "#ff3366"; // Change color to active state
+                link.style.pointerEvents = "auto"; // Make clickable
             }
         });
-    </script>
+    });
+</script>
+
 </body>
 </html>
