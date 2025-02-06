@@ -130,7 +130,10 @@
             }
         });
     });
-       document.addEventListener("DOMContentLoaded", function () {
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
         const eventDates = {
             "rose-day.html": "2025-02-07T00:00:00",
             "propose-day.html": "2025-02-08T00:00:00",
@@ -143,6 +146,7 @@
         };
 
         const links = document.querySelectorAll("#days-container a");
+        let timerDiv;
 
         links.forEach(link => {
             const pageName = link.getAttribute("href");
@@ -150,22 +154,30 @@
             const now = new Date();
 
             if (now < unlockDate) {
-                link.addEventListener("click", function (event) {
-                    event.preventDefault(); // Prevent access if locked
-                    showCountdown(unlockDate);
+                // Prevent clicking if locked
+                link.addEventListener("click", (event) => event.preventDefault());
+
+                // Show timer on hover
+                link.addEventListener("mouseover", function (event) {
+                    showCountdown(event, unlockDate);
+                });
+
+                // Hide timer when cursor leaves
+                link.addEventListener("mouseleave", function () {
+                    if (timerDiv) timerDiv.remove();
                 });
             }
         });
 
-        function showCountdown(unlockDate) {
-            let timerDiv = document.getElementById("timer-heart");
+        function showCountdown(event, unlockDate) {
+            if (timerDiv) timerDiv.remove(); // Remove old timer if it exists
 
-            if (!timerDiv) {
-                timerDiv = document.createElement("div");
-                timerDiv.id = "timer-heart";
-                timerDiv.innerHTML = `<span id="timer-text"></span>`;
-                document.body.appendChild(timerDiv);
-            }
+            timerDiv = document.createElement("div");
+            timerDiv.id = "timer-heart";
+            timerDiv.innerHTML = `<span id="timer-text"></span>`;
+            document.body.appendChild(timerDiv);
+
+            positionTimer(event);
 
             function updateTimer() {
                 const now = new Date();
@@ -183,12 +195,21 @@
                 const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
 
                 document.getElementById("timer-text").innerHTML =
-                    `${days}d ${hours}h ${minutes}m ${seconds}s left`;
+                    `${days}d ${hours}h ${minutes}m ${seconds}s`;
 
                 setTimeout(updateTimer, 1000);
             }
 
             updateTimer();
+        }
+
+        function positionTimer(event) {
+            const x = event.pageX;
+            const y = event.pageY;
+
+            timerDiv.style.position = "absolute";
+            timerDiv.style.left = `${x}px`;
+            timerDiv.style.top = `${y + 20}px`;
         }
     });
 </script>
@@ -196,10 +217,7 @@
 <style>
     /* Heart Shape */
     #timer-heart {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+        position: absolute;
         width: 120px;
         height: 120px;
         background-color: #ff4d6d;
@@ -219,10 +237,10 @@
     /* Heartbeat Animation */
     @keyframes heartbeat {
         0% {
-            transform: translate(-50%, -50%) scale(1);
+            transform: scale(1);
         }
         100% {
-            transform: translate(-50%, -50%) scale(1.2);
+            transform: scale(1.2);
         }
     }
 
@@ -253,7 +271,5 @@
         z-index: 2;
     }
 </style>
-
-
 </body>
 </html>
