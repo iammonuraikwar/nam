@@ -138,28 +138,30 @@
             });
         });
 
-        // Create Floating Roses on Touch/Click
-        document.body.addEventListener("click", function (event) {
-            let rose = document.createElement("img");
-            rose.src = "https://thumbs.dreamstime.com/b/red-rose-white-background-photo-represents-pure-beauty-nature-rose-png-little-red-rose-background-301560193.jpg"; // Use a small rose image
-            rose.style.position = "absolute";
-            rose.style.width = "50px";
-            rose.style.left = event.clientX + "px";
-            rose.style.top = event.clientY + "px";
-            rose.style.transition = "all 3s ease-in-out";
-            document.body.appendChild(rose);
+           // Create Floating Roses on Touch/Click
+document.body.addEventListener("click", function (event) {
+    let rose = document.createElement("span");
+    rose.innerText = "🌹"; // Rose emoji instead of image
+    rose.style.position = "absolute";
+    rose.style.fontSize = "30px"; 
+    rose.style.left = event.clientX + "px";
+    rose.style.top = event.clientY + "px";
+    rose.style.transition = "all 3s ease-in-out";
+    rose.style.opacity = "1";
 
-            // Animate the rose upwards and fade out
-            setTimeout(() => {
-                rose.style.transform = "translateY(-100px)";
-                rose.style.opacity = "0";
-            }, 100);
+    document.body.appendChild(rose);
 
-            // Remove rose after animation
-            setTimeout(() => {
-                rose.remove();
-            }, 3000);
-        });
+    // Animate the rose upwards and fade out
+    setTimeout(() => {
+        rose.style.transform = "translateY(-100px)";
+        rose.style.opacity = "0";
+    }, 100);
+
+    // Remove rose after animation
+    setTimeout(() => {
+        rose.remove();
+    }, 3000);
+});
     </script>
 </body>
 </html>
