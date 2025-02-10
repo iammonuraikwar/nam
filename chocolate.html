@@ -3,100 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chocolate Day</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Surprise Chocolate Box</title>
     <style>
         body {
-            background: linear-gradient(120deg, #8B4513, #D2691E, #A0522D);
-            background-size: 300% 300%;
-            animation: backgroundAnimation 10s infinite alternate;
-            text-align: center;
-            font-family: 'Arial', sans-serif;
-            position: relative;
+            background-color: #f0e68c; /* Light yellow background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: sans-serif;
             overflow: hidden;
         }
-        @keyframes backgroundAnimation {
-            0% { background-position: left top; }
-            100% { background-position: right bottom; }
-        }
-        h1 {
-            color: #ffdead;
-            font-size: 2.5em;
-            animation: fadeIn 2s;
-        }
-        p {
-            color: #d2691e;
-            font-size: 1.3em;
-        }
-        img {
-            width: 80%;
-            max-width: 600px;
+
+        .chocolate-box {
+            width: 300px;
+            height: 200px;
+            background-image: url("https://5.imimg.com/data5/LV/AV/MY-11367283/chocolate-gift-box-500x500.jpg"); /* Replace with your box image */
+            background-size: cover;
             border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
-            animation: popIn 2s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            cursor: pointer; /* Make it clickable */
+            transition: transform 0.2s ease; /* Add a smooth transition */
+            position: relative;
         }
-        .hearts {
+
+        .chocolate-box:hover {
+            transform: scale(1.05); /* Slightly enlarge on hover */
+        }
+
+        .surprise {
+            display: none; /* Initially hidden */
             position: absolute;
-            top: 0;
+            top: 50%;
             left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
+            transform: translate(-50%, -50%);
+            background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            z-index: 10;
         }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+
+        .surprise img { /* Style for surprise image (optional) */
+            max-width: 200px;
+            height: auto;
+            margin-bottom: 10px;
         }
-        @keyframes popIn {
-            from { transform: scale(0); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
+
+        .close-button {
+            margin-top: 10px;
+            padding: 8px 16px;
+            background-color: #8B4513; /* Chocolate color */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
         }
-        .back-home {
-            display: block;
-            margin-top: 20px;
-            text-decoration: none;
-            color: #ffdead;
-            font-size: 1.2em;
-            font-weight: bold;
+
+        /* Confetti */
+        .confetti {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background-color: red;
+            opacity: 0.7;
+            border-radius: 50%;
+            animation: fall linear 1s forwards;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(500px);
+                opacity: 0;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>Happy Chocolate Day! 🍫</h1>
-    <p>"Love is sweet, just like chocolate. Sending you my sweetest wishes!"</p>
-    <img src="https://i.pinimg.com/474x/34/37/35/343735efbb78734dd56b8381bffac15c.jpg" alt="Delicious Chocolate">
-    <audio id="bg-music" autoplay loop>
-        <source src="chocolate-music.mp3" type="audio/mpeg">
-    </audio>
-    <a href="index.html" class="back-home">Back to Home</a>
-    
+
+    <div class="chocolate-box" onclick="showSurprise()">
+        <div class="surprise" id="surprise">
+            <img src="https://assets.oyegifts.com/flowers-n-gifts/vendordata/product/yuva1431.jpg" alt="Surprise!">
+            <p>You found a delicious surprise! Call to receive.</p>
+            <button class="close-button" onclick="hideSurprise()">Get</button>
+        </div>
+    </div>
+
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const heartsContainer = document.createElement("div");
-            heartsContainer.classList.add("hearts");
-            document.body.appendChild(heartsContainer);
-            
-            function createHeart() {
-                let heart = document.createElement("div");
-                heart.innerHTML = "🍭";
-                heart.style.position = "absolute";
-                heart.style.left = Math.random() * 100 + "vw";
-                heart.style.top = "0px";
-                heart.style.fontSize = Math.random() * 30 + 20 + "px";
-                heart.style.opacity = Math.random();
-                heartsContainer.appendChild(heart);
-                
-                let moveInterval = setInterval(() => {
-                    heart.style.top = parseInt(heart.style.top) + 2 + "px";
-                    if (parseInt(heart.style.top) > window.innerHeight) {
-                        heart.remove();
-                        clearInterval(moveInterval);
-                    }
-                }, 50);
+        function showSurprise() {
+            document.getElementById("surprise").style.display = "block";
+            launchConfetti();
+        }
+
+        function hideSurprise() {
+            document.getElementById("surprise").style.display = "none";
+        }
+
+        function launchConfetti() {
+            for (let i = 0; i < 100; i++) {
+                let confetti = document.createElement("div");
+                confetti.className = "confetti";
+                document.body.appendChild(confetti);
+
+                let colors = ["#ff0000", "#ff8000", "#ffff00", "#80ff00", "#00ff80", "#0080ff", "#8000ff", "#ff0080"];
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+
+                confetti.style.left = Math.random() * window.innerWidth + "px";
+                confetti.style.top = "-10px";
+
+                confetti.style.animationDuration = (Math.random() * 1.5 + 0.5) + "s";
+
+                setTimeout(() => confetti.remove(), 2000);
             }
-            setInterval(createHeart, 500);
-        });
+        }
     </script>
+
 </body>
 </html>
