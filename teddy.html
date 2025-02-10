@@ -1,21 +1,141 @@
-<!-- Teddy Day Page -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teddy Day</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Surprise Box</title>
+    <style>
+        @keyframes colorChange {
+            0% { background-color: #f0f0f0; }
+            50% { background-color: #ffccff; }
+            100% { background-color: #f0f0f0; }
+        }
+        
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+            padding: 20px;
+            animation: colorChange 5s infinite alternate;
+        }
+
+        h1 {
+            font-family: 'Arial', sans-serif;
+            color: #ff4081;
+            margin-bottom: 20px;
+        }
+
+        .box {
+            width: 90vw;
+            max-width: 300px;
+            height: 90vw;
+            max-height: 300px;
+            background-color: #ffc0cb;
+            border-radius: 10px;
+            cursor: pointer;
+            position: relative;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease;
+            overflow: hidden;
+        }
+
+        .box:hover {
+            transform: scale(1.05);
+        }
+
+        .box.open .teddy-bear {
+            opacity: 1;
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 20px rgba(255, 223, 186, 0.8));
+        }
+
+        .teddy-bear {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .teddy-bear img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+        }
+
+        .message {
+            position: absolute;
+            bottom: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            font-family: 'Arial', sans-serif;
+            font-size: 16px;
+            color: #ff4081;
+            text-align: center;
+        }
+
+        .box.open .message {
+            opacity: 1;
+        }
+
+        @keyframes teddyShower {
+            0% { transform: translateY(-100vh) scale(0.5); }
+            100% { transform: translateY(100vh) scale(1); }
+        }
+        
+        .shower {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: url('https://pngcore.com/files/preview/800x1035/11691158811xoam9o3r3wktfbziw7g2jshqlesxhxkbwnqozmum2usiksp5loy63ts5fim6leurg3wgiqpgdgalblfl5k0l7iuwvh5dmxnejxet.png') no-repeat center/contain;
+            animation: teddyShower 3s linear infinite;
+        }
+    </style>
 </head>
-<body style="background-color: #f5deb3; text-align: center;">
-    <h1 style="color: #8b4513;">Happy Teddy Day! 🧸</h1>
-    <p style="color: #654321;">May this cuddly teddy bring you warmth and joy, just like my love for you!</p>
-    <img src="teddy.jpg" alt="Cute Teddy">
-    <audio controls autoplay>
-        <source src="teddy-music.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
-    <br>
-    <a href="index.html" style="color: #8b4513;">Back to Home</a>
+<body>
+
+<div class="container">
+    <h1>Click On The Box Get Your Surprise</h1>
+    <div class="box" onclick="toggleTeddyBear(this)">
+        <div class="teddy-bear">
+            <img src="https://pngcore.com/files/preview/800x1035/11691158811xoam9o3r3wktfbziw7g2jshqlesxhxkbwnqozmum2usiksp5loy63ts5fim6leurg3wgiqpgdgalblfl5k0l7iuwvh5dmxnejxet.png" alt="Teddy Bear">
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleTeddyBear(box) {
+        box.classList.toggle("open");
+        if (box.classList.contains("open")) {
+            createTeddyShower();
+        }
+    }
+
+    function createTeddyShower() {
+        for (let i = 0; i < 100; i++) {
+            let teddy = document.createElement("div");
+            teddy.classList.add("shower");
+            teddy.style.left = Math.random() * window.innerWidth + "px";
+            teddy.style.animationDuration = (Math.random() * 5 + 2) + "s";
+            document.body.appendChild(teddy);
+            setTimeout(() => { teddy.remove(); }, 3000);
+        }
+    }
+</script>
+
 </body>
 </html>
