@@ -3,165 +3,149 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rose Day</title>
+    <title>Rose Surprise</title>
     <style>
-        /* Import Romantic Font */
-        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap');
-
-        /* General Styles */
         body {
-            background: radial-gradient(circle, #ffb3c1, #ff6b81);
-            font-family: 'Dancing Script', cursive;
-            text-align: center;
-            color: white;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
             margin: 0;
-            padding: 0;
             overflow: hidden;
+            transition: background-color 1s ease;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .wrapper {
             position: relative;
-        }
-
-        /* Container */
-        .container {
-            padding: 20px;
-            margin-top: 80px;
-            animation: fadeIn 2s ease-in-out;
-        }
-
-        /* Heart Beat Animation for Header */
-        .heart-text {
-            font-size: 50px;
-            color: #d6336c;
-            animation: heartBeat 2s infinite;
-        }
-
-        @keyframes heartBeat {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        /* Romantic Text */
-        .romantic-text {
-            font-size: 24px;
-            color: #fff;
-            font-style: italic;
-        }
-
-        /* Rose Image */
-        .rose-image {
-            width: 200px;
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(255, 0, 102, 0.5);
-            transition: transform 0.3s;
-        }
-
-        .rose-image:hover {
-            transform: scale(1.1);
-        }
-
-        /* Footer with Back Button */
-        footer {
-            position: absolute;
-            bottom: 20px;
-            width: 100%;
+            width: 300px;
+            height: 300px;
+            perspective: 1000px;
+            cursor: pointer;
             text-align: center;
         }
 
-        .back-button {
-            display: inline-block;
-            padding: 12px 24px;
-            background-color: #fff;
-            color: #d6336c;
-            text-decoration: none;
-            border-radius: 30px;
-            font-size: 18px;
-            font-weight: bold;
-            transition: all 0.3s ease;
-        }
-
-        .back-button:hover {
-            background-color: #d6336c;
-            color: white;
-            transform: scale(1.1);
-        }
-
-        /* Floating Roses */
-        .floating-roses {
+        .box {
             position: absolute;
-            top: 0;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 1s ease;
+            background: linear-gradient(135deg, #ff758c, #ff7eb3);
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2em;
+            font-weight: bold;
+            color: white;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .roses {
+            position: absolute;
+            top: 50%;
             left: 50%;
-            width: 100px;
-            height: 100px;
-            background: url('floating-rose.png') no-repeat center;
-            background-size: contain;
-            animation: floatRoses 5s infinite;
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 1s ease, opacity 1s ease;
+            opacity: 0;
         }
 
-        @keyframes floatRoses {
-            0% { transform: translateY(0) rotate(0deg); opacity: 0.8; }
-            50% { transform: translateY(-20px) rotate(10deg); opacity: 1; }
-            100% { transform: translateY(-40px) rotate(-10deg); opacity: 0.8; }
+        .roses img {
+            width: 280px;
+            height: auto;
+            display: block;
         }
 
-        /* Fade-in Effect */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+        .wrapper.open .box {
+            transform: rotateY(1080deg);
+        }
+
+        .wrapper.open .roses {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+
+        .dynamic-text {
+            position: absolute;
+            top: 80%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 20px;
+            color: #ff4081;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        .wrapper.open .dynamic-text {
+            opacity: 1;
+        }
+
+        @keyframes roseShower {
+            0% { transform: translateY(-100vh) scale(0.5); opacity: 1; }
+            100% { transform: translateY(100vh) scale(1); opacity: 0; }
+        }
+        
+        .shower {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: url('https://thumbs.dreamstime.com/b/top-view-beauty-red-rose-cropped-png-transparent-background-generative-ai-top-view-beauty-red-rose-green-leaves-cropped-278513921.jpg') no-repeat center/contain;
+         
+            animation: roseShower 5s linear infinite;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1 class="heart-text">Happy Rose Day! 🌹</h1>
-        <p class="romantic-text">Roses are red, violets are blue, every moment with you feels brand new!</p>
-        <img src="rose.jpg" alt="Beautiful Rose" class="rose-image">
-        
-        <!-- Background Music -->
-        <audio id="bg-music" autoplay loop>
-            <source src="kitni.mp3" type="audio/mpeg">
-            Your browser does not support the audio element.
-        </audio>
+
+<div class="wrapper" onclick="toggleSurprise(this)">
+    <div class="box">Tap 🌹</div>
+    <div class="roses">
+        <img src="https://m.media-amazon.com/images/I/81nvYjVXwwL.jpg" alt="Roses">
     </div>
+    <div class="dynamic-text" id="dynamicText"><br>
+    <br>
+    
+    <br>Your Smile As Beautiful As <br>A Rose 💖
+    </div>
+</div>
 
-    <!-- Footer with Back Button -->
-    <footer>
-        <a href="index.html" class="back-button">Back to Home</a>
-    </footer>
+<script>
+    const colors = ["#f0f0f0", "#e6f2ff", "#d0bfff", "#c09fff", "#b07fff", "#a05fff", "#903fff"];
 
-    <script>
-        // Play Background Music Automatically After User Interaction
-        document.addEventListener("DOMContentLoaded", function () {
-            let music = document.getElementById("bg-music");
-            music.volume = 0.5;
+    function toggleSurprise(wrapper) {
+        wrapper.classList.toggle("open");
+        changeBackgroundColor();
+        if (wrapper.classList.contains("open")) {
+            showDynamicText();
+            createRoseShower();
+        }
+    }
 
-            document.body.addEventListener("click", () => {
-                music.play();
-            });
-        });
+    function changeBackgroundColor() {
+        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+        document.body.style.backgroundColor = randomColor;
+    }
 
-           // Create Floating Roses on Touch/Click
-document.body.addEventListener("click", function (event) {
-    let rose = document.createElement("span");
-    rose.innerText = "🌹"; // Rose emoji instead of image
-    rose.style.position = "absolute";
-    rose.style.fontSize = "30px"; 
-    rose.style.left = event.clientX + "px";
-    rose.style.top = event.clientY + "px";
-    rose.style.transition = "all 3s ease-in-out";
-    rose.style.opacity = "1";
+    function showDynamicText() {
+        document.getElementById("dynamicText").style.opacity = "1";
+    }
 
-    document.body.appendChild(rose);
+    function createRoseShower() {
+        for (let i = 0; i < 10; i++) {
+            let rose = document.createElement("div");
+            rose.classList.add("shower");
+            rose.style.left = Math.random() * window.innerWidth + "px";
+            rose.style.animationDuration = (Math.random() * 5 + 2) + "s";
+            document.body.appendChild(rose);
+            setTimeout(() => { rose.remove(); }, 5000);
+        }
+    }
 
-    // Animate the rose upwards and fade out
-    setTimeout(() => {
-        rose.style.transform = "translateY(-100px)";
-        rose.style.opacity = "0";
-    }, 100);
+    changeBackgroundColor();
+</script>
 
-    // Remove rose after animation
-    setTimeout(() => {
-        rose.remove();
-    }, 3000);
-});
-    </script>
 </body>
 </html>
